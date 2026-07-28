@@ -24,16 +24,6 @@ use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
 final class ReturnTypeCoverageRule implements Rule
 {
     /**
-     * @var string
-     */
-    public const ERROR_MESSAGE = 'Out of %d possible return types, only %d - %.1f %% actually have it. Add more return types to get over %s %%';
-
-    /**
-     * @var string
-     */
-    private const IDENTIFIER = 'typeCoverage.returnTypeCoverage';
-
-    /**
      * @readonly
      * @var \TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter
      */
@@ -51,11 +41,18 @@ final class ReturnTypeCoverageRule implements Rule
      */
     private $collectorDataNormalizer;
 
-    public function __construct(
-        TypeCoverageFormatter $typeCoverageFormatter,
-        Configuration $configuration,
-        CollectorDataNormalizer $collectorDataNormalizer
-    ) {
+    /**
+     * @var string
+     */
+    public const ERROR_MESSAGE = 'Out of %d possible return types, only %d - %.1f %% actually have it. Add more return types to get over %s %%';
+
+    /**
+     * @var string
+     */
+    private const IDENTIFIER = 'typeCoverage.returnTypeCoverage';
+
+    public function __construct(TypeCoverageFormatter $typeCoverageFormatter, Configuration $configuration, CollectorDataNormalizer $collectorDataNormalizer)
+    {
         $this->typeCoverageFormatter = $typeCoverageFormatter;
         $this->configuration = $configuration;
         $this->collectorDataNormalizer = $collectorDataNormalizer;

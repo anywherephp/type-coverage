@@ -22,6 +22,12 @@ use TomasVotruba\TypeCoverage\Configuration\ScopeConfigurationResolver;
 final class DeclareCoverageRule implements Rule
 {
     /**
+     * @readonly
+     * @var \TomasVotruba\TypeCoverage\Configuration
+     */
+    private $configuration;
+
+    /**
      * @var string
      */
     public const ERROR_MESSAGE = 'Out of %d possible declare(strict_types=1), only %d - %.1f %% actually have it. Add more declares to get over %s %%';
@@ -30,12 +36,6 @@ final class DeclareCoverageRule implements Rule
      * @var string
      */
     private const IDENTIFIER = 'typeCoverage.declareCoverage';
-
-    /**
-     * @readonly
-     * @var \TomasVotruba\TypeCoverage\Configuration
-     */
-    private $configuration;
 
     public function __construct(Configuration $configuration)
     {

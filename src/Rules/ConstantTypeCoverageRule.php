@@ -24,16 +24,6 @@ use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
 final class ConstantTypeCoverageRule implements Rule
 {
     /**
-     * @var string
-     */
-    public const ERROR_MESSAGE = 'Out of %d possible constant types, only %d - %.1f %% actually have it. Add more constant types to get over %s %%';
-
-    /**
-     * @var string
-     */
-    private const IDENTIFIER = 'typeCoverage.constantTypeCoverage';
-
-    /**
      * @readonly
      * @var \TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter
      */
@@ -51,11 +41,18 @@ final class ConstantTypeCoverageRule implements Rule
      */
     private $collectorDataNormalizer;
 
-    public function __construct(
-        TypeCoverageFormatter $typeCoverageFormatter,
-        Configuration $configuration,
-        CollectorDataNormalizer $collectorDataNormalizer
-    ) {
+    /**
+     * @var string
+     */
+    public const ERROR_MESSAGE = 'Out of %d possible constant types, only %d - %.1f %% actually have it. Add more constant types to get over %s %%';
+
+    /**
+     * @var string
+     */
+    private const IDENTIFIER = 'typeCoverage.constantTypeCoverage';
+
+    public function __construct(TypeCoverageFormatter $typeCoverageFormatter, Configuration $configuration, CollectorDataNormalizer $collectorDataNormalizer)
+    {
         $this->typeCoverageFormatter = $typeCoverageFormatter;
         $this->configuration = $configuration;
         $this->collectorDataNormalizer = $collectorDataNormalizer;
