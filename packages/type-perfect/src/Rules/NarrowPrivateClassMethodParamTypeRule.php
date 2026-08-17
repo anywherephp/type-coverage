@@ -32,15 +32,36 @@ use Rector\TypePerfect\NodeFinder\MethodCallNodeFinder;
  * @see \Rector\TypePerfect\Tests\Rules\NarrowPrivateClassMethodParamTypeRule\NarrowPrivateClassMethodParamTypeRuleTest
  * @implements Rule<MethodCall>
  */
-final readonly class NarrowPrivateClassMethodParamTypeRule implements Rule
+final class NarrowPrivateClassMethodParamTypeRule implements Rule
 {
-    public const string ERROR_MESSAGE = 'Parameter %d should use "%s" type as the only type passed to this method';
+    /**
+     * @readonly
+     * @var \Rector\TypePerfect\Configuration
+     */
+    private $configuration;
 
-    public function __construct(
-        private Configuration $configuration,
-        private MethodCallNodeFinder $methodCallNodeFinder,
-        private ClassMethodNodeFinder $classMethodNodeFinder
-    ) {
+    /**
+     * @readonly
+     * @var \Rector\TypePerfect\NodeFinder\MethodCallNodeFinder
+     */
+    private $methodCallNodeFinder;
+
+    /**
+     * @readonly
+     * @var \Rector\TypePerfect\NodeFinder\ClassMethodNodeFinder
+     */
+    private $classMethodNodeFinder;
+
+    /**
+     * @var string
+     */
+    public const ERROR_MESSAGE = 'Parameter %d should use "%s" type as the only type passed to this method';
+
+    public function __construct(Configuration $configuration, MethodCallNodeFinder $methodCallNodeFinder, ClassMethodNodeFinder $classMethodNodeFinder)
+    {
+        $this->configuration = $configuration;
+        $this->methodCallNodeFinder = $methodCallNodeFinder;
+        $this->classMethodNodeFinder = $classMethodNodeFinder;
     }
 
     /**

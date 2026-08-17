@@ -6,5 +6,8 @@ namespace Rector\TypePerfect\Enum\Types;
 
 final class ResolvedTypes
 {
-    public const string UNKNOWN_TYPES = 'unknown_types';
+    /**
+     * @var string
+     */
+    public const UNKNOWN_TYPES = 'unknown_types';
 }

@@ -19,18 +19,30 @@ use Rector\TypePerfect\Configuration;
 /**
  * @implements Rule<ClassMethod>
  */
-final readonly class ReturnNullOverFalseRule implements Rule
+final class ReturnNullOverFalseRule implements Rule
 {
     /**
-     * @api
+     * @readonly
+     * @var \Rector\TypePerfect\Configuration
      */
-    public const string ERROR_MESSAGE = 'Returning false in non return bool class method. Use null with type|null instead or add bool return type';
+    private $configuration;
 
-    private NodeFinder $nodeFinder;
+    /**
+     * @api
+     * @var string
+     */
+    public const ERROR_MESSAGE = 'Returning false in non return bool class method. Use null with type|null instead or add bool return type';
+
+    /**
+     * @readonly
+     * @var \PhpParser\NodeFinder
+     */
+    private $nodeFinder;
 
     public function __construct(
-        private Configuration $configuration,
+        Configuration $configuration
     ) {
+        $this->configuration = $configuration;
         $this->nodeFinder = new NodeFinder();
     }
 

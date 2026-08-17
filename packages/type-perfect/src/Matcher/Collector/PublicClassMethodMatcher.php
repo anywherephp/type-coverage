@@ -13,7 +13,7 @@ final class PublicClassMethodMatcher
     /**
      * @var string[]
      */
-    private const array SKIPPED_TYPES = [
+    private const SKIPPED_TYPES = [
         'PHPUnit\Framework\TestCase',
         'Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator',
     ];
@@ -24,8 +24,14 @@ final class PublicClassMethodMatcher
         if (! $classReflection->isClass()) {
             return true;
         }
-
-        return array_any(self::SKIPPED_TYPES, fn (string $skippedType): bool => $classReflection->is($skippedType));
+        $found = false;
+        foreach (self::SKIPPED_TYPES as $skippedType) {
+            if ($classReflection->is($skippedType)) {
+                $found = true;
+                break;
+            }
+        }
+        return $found;
     }
 
     public function isUsedByParentClassOrInterface(ClassReflection $classReflection, string $methodName): bool
@@ -36,8 +42,14 @@ final class PublicClassMethodMatcher
                 return true;
             }
         }
-
-        return array_any($classReflection->getParents(), fn (ClassReflection $parentClassReflection): bool => $parentClassReflection->hasMethod($methodName));
+        $found = false;
+        foreach ($classReflection->getParents() as $parentClassReflection) {
+            if ($parentClassReflection->hasMethod($methodName)) {
+                $found = true;
+                break;
+            }
+        }
+        return $found;
     }
 
     public function shouldSkipClassMethod(ClassMethod $classMethod): bool
@@ -62,6 +74,6 @@ final class PublicClassMethodMatcher
         $doc = $classMethod->getDocComment();
 
         // skip symfony action
-        return $doc instanceof Doc && str_contains($doc->getText(), '@Route');
+        return $doc instanceof Doc && strpos($doc->getText(), '@Route') !== false;
     }
 }

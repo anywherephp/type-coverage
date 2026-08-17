@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Rector\TypePerfect\Matcher;
 
 use PhpParser\Node\Expr;
-use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\MethodCallableNode;
 use PHPStan\Type\ThisType;
@@ -14,8 +13,11 @@ use Rector\TypePerfect\ValueObject\MethodCallReference;
 
 final class ClassMethodCallReferenceResolver
 {
+    /**
+     * @param \PhpParser\Node\Expr\MethodCall|\PHPStan\Node\MethodCallableNode $methodCallOrMethodCallable
+     */
     public function resolve(
-        MethodCall|MethodCallableNode $methodCallOrMethodCallable,
+        $methodCallOrMethodCallable,
         Scope $scope,
         bool $allowThisType
     ): ?MethodCallReference {
