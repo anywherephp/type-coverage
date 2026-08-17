@@ -50,9 +50,16 @@ final class NarrowReturnObjectTypeRule implements Rule
     public const ERROR_MESSAGE = 'Provide more specific return type "%s" over abstract one';
 
     /**
-     * @var string
+     * These concrete classes are commonly returned behind an abstract interface/type on purpose,
+     * so narrowing to them would break the intended contract.
+     *
+     * @var string[]
      */
-    private const DOCTRINE_ARRAY_COLLECTION_CLASS = 'Doctrine\Common\Collections\ArrayCollection';
+    private const SKIPPED_RETURN_CLASSES = [
+        'Doctrine\Common\Collections\ArrayCollection',
+        'Symfony\Component\Form\Form',
+        'Symfony\Component\Form\FormInterface',
+    ];
 
     public function __construct(ReturnNodeFinder $returnNodeFinder, MethodNodeAnalyser $methodNodeAnalyser, Configuration $configuration)
     {
@@ -160,8 +167,8 @@ final class NarrowReturnObjectTypeRule implements Rule
             return true;
         }
 
-        // skip Doctrine ArrayCollection, as the abstract Collection interface is the expected return type
-        if ($type->getObjectClassNames()[0] === self::DOCTRINE_ARRAY_COLLECTION_CLASS) {
+        // skip concrete classes that are expected to be returned behind an abstract interface/type
+        if (in_array($type->getObjectClassNames()[0], self::SKIPPED_RETURN_CLASSES, true)) {
             return true;
         }
 
