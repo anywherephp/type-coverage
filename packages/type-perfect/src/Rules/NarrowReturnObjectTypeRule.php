@@ -63,6 +63,7 @@ final class NarrowReturnObjectTypeRule implements Rule
         'DateTime',
         'DateTimeImmutable',
         'SplObjectStorage',
+        'Doctrine\DBAL\Schema\AbstractSchemaManager',
     ];
 
     public function __construct(ReturnNodeFinder $returnNodeFinder, MethodNodeAnalyser $methodNodeAnalyser, Configuration $configuration)
