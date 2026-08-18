@@ -61,6 +61,7 @@ final class NarrowReturnObjectTypeRule implements Rule
         'Symfony\Component\Form\FormInterface',
         'DateTime',
         'DateTimeImmutable',
+        'SplObjectStorage',
     ];
 
     public function __construct(ReturnNodeFinder $returnNodeFinder, MethodNodeAnalyser $methodNodeAnalyser, Configuration $configuration)
